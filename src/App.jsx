@@ -62,7 +62,7 @@ export default function App() {
         }
       });
     };
-  }, []);
+  }, [visible]);
   return (
     <>
       {visible && (
@@ -70,7 +70,7 @@ export default function App() {
           size="small"
           color="primary"
           sx={{
-            position: "fixed",
+            position:"fixed",
             right:10,
             bottom:12,
           }}
