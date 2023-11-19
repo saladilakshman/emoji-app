@@ -5,6 +5,7 @@ import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import "./App.css";
 import {
   Box,
   ListItemIcon,
