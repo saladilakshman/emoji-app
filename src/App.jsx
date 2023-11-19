@@ -55,15 +55,15 @@ export default function App() {
   }, [emojitype]);
   useEffect(() => {
     window.onscroll = () => {
-      document.startViewTransition(() => {
+      
         if (document.documentElement.scrollTop > 0) {
           setVisible(true);
         } else {
           setVisible(false);
         }
-      });
+    
     };
-  }, [visible]);
+  }, []);
   return (
     <>
       {visible && (
@@ -161,7 +161,7 @@ export default function App() {
             sx={{
               placeItems: "center",
               marginLeft: mobile ? "-2rem" : 40,
-              paddingBlockStart: 8,
+              marginBlockStart:mobile?4:8,
               padding: mobile ? 2 : "",
             }}
           >
