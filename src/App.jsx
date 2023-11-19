@@ -54,7 +54,7 @@ export default function App() {
       .catch((err) => console.log(err));
   }, [emojitype]);
   useEffect(() => {
-    document.onscroll = () => {
+    window.onscroll = () => {
       document.startViewTransition(() => {
         if (document.documentElement.scrollTop > 0) {
           setVisible(true);
@@ -84,7 +84,7 @@ export default function App() {
           <ArrowUpwardIcon />
         </Fab>
       )}
-      <Box sx={{ display: "flex" }}>
+     <Box sx={{display:'flex'}}>
         <AppBar
           sx={{
             width: "100%",
@@ -213,7 +213,7 @@ export default function App() {
             })}
           </Grid>
         )}
-      </Box>
+     </Box>
     </>
   );
 }
