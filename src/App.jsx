@@ -1,15 +1,16 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
-import Key from "./key"
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import {
   Box,
   ListItemIcon,
   CircularProgress,
   Typography,
+  Fab,
   AppBar,
   Drawer,
   Paper,
@@ -19,22 +20,18 @@ import {
   ListItemText,
   useMediaQuery,
   useTheme,
-  IconButton
+  IconButton,
 } from "@mui/material";
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 import MenuIcon from "@mui/icons-material/Menu";
 export default function App() {
   const categories = [
     {
       type: "smileys-emotion",
-      icon: <TagFacesIcon />
+      icon: <TagFacesIcon />,
     },
     { type: "people-body", icon: <EmojiPeopleIcon /> },
     { type: "animals-nature", icon: <EmojiNatureIcon /> },
-    { type: "food-drink", icon: <FastfoodIcon /> }
+    { type: "food-drink", icon: <FastfoodIcon /> },
   ];
   const [emojidata, setEmojidata] = useState([]);
   const [emojitype, setEmojitype] = useState("smileys-emotion");
@@ -43,10 +40,11 @@ export default function App() {
   const [hide, setHide] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
     axios
       .get(
-        `https://emoji-api.com/categories/${emojitype}?access_key=${Key}`
+        `https://emoji-api.com/categories/${emojitype}?access_key=57fe206d83fd12f1a95a0039018314e7577491d3`
       )
       .then((res) => {
         setEmojidata(res.data);
@@ -54,16 +52,44 @@ export default function App() {
       })
       .catch((err) => console.log(err));
   }, [emojitype]);
-
+  useEffect(() => {
+    document.onscroll = () => {
+      document.startViewTransition(() => {
+        if (document.documentElement.scrollTop > 0) {
+          setVisible(true);
+        } else {
+          setVisible(false);
+        }
+      });
+    };
+  }, []);
   return (
     <>
+      {visible && (
+        <Fab
+          size="small"
+          color="primary"
+          sx={{
+            position: "fixed",
+            right:10,
+            bottom:12,
+          }}
+          onClick={() => {
+            document.startViewTransition(() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+          }}
+        >
+          <ArrowUpwardIcon />
+        </Fab>
+      )}
       <Box sx={{ display: "flex" }}>
         <AppBar
           sx={{
             width: "100%",
             display: "grid",
             gridTemplateColumns: "1fr 4fr",
-            placeItems: "center"
+            placeItems: "center",
           }}
         >
           <IconButton
@@ -100,16 +126,16 @@ export default function App() {
                     backgroundColor: index === selectedIndex ? "#CAB7A2" : "",
                     "&:hover": {
                       backgroundColor: "#CAB7A2",
-                      color: "white"
-                    }
+                      color: "white",
+                    },
                   }}
                 >
                   <ListItemIcon>{category.icon}</ListItemIcon>
                   <ListItemText
                     sx={{
                       "&:first-letter": {
-                        textTransform: "uppercase"
-                      }
+                        textTransform: "uppercase",
+                      },
                     }}
                   >
                     {category.type}
@@ -124,7 +150,7 @@ export default function App() {
             sx={{
               position: "absolute",
               left: mobile ? "45%" : "56%",
-              top: "50%"
+              top: "50%",
             }}
           />
         ) : (
@@ -135,8 +161,7 @@ export default function App() {
               placeItems: "center",
               marginLeft: mobile ? "-2rem" : 40,
               paddingBlockStart: 8,
-              marginBlockStart:3,
-              padding: mobile ? 2 : ""
+              padding: mobile ? 2 : "",
             }}
           >
             {emojidata?.map((emoji, index) => {
@@ -157,15 +182,15 @@ export default function App() {
                       justifyContent: "center",
                       alignItems: "center",
                       "&:hover": {
-                        boxShadow: 4
-                      }
+                        boxShadow: 4,
+                      },
                     }}
                   >
                     <Typography
                       variant="body1"
                       textAlign="center"
                       sx={{
-                        fontSize: 22
+                        fontSize: 22,
                       }}
                     >
                       {character}
@@ -175,8 +200,8 @@ export default function App() {
                       textAlign="center"
                       sx={{
                         "&:first-letter": {
-                          textTransform: "uppercase"
-                        }
+                          textTransform: "uppercase",
+                        },
                       }}
                     >
                       {trimmedslug}
