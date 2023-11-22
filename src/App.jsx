@@ -8,6 +8,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import "./App.css";
 import {
   Box,
+  Stack,
   ListItemIcon,
   CircularProgress,
   Typography,
@@ -22,8 +23,12 @@ import {
   useMediaQuery,
   useTheme,
   IconButton,
+  Switch,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 export default function App() {
   const categories = [
     {
@@ -64,8 +69,15 @@ export default function App() {
     
     };
   }, []);
+  const[ischecked, setIschecked]=useState(false);
+  const maketheme=createTheme({
+    palette:{
+      mode:ischecked?'dark':'light'
+    },
+  })
   return (
-    <>
+    <ThemeProvider theme={maketheme}>
+      <CssBaseline/>
       {visible && (
         <Fab
           size="small"
@@ -89,7 +101,7 @@ export default function App() {
           sx={{
             width: "100%",
             display: "grid",
-            gridTemplateColumns: "1fr 4fr",
+            gridTemplateColumns: "1fr 4fr 100px",
             placeItems: "center",
           }}
         >
@@ -103,10 +115,14 @@ export default function App() {
           <Typography
             variant="h6"
             textAlign="center"
-            sx={{ marginInlineEnd: mobile ? 10 : 9 }}
+            sx={{ marginInlineStart: mobile ? 3 : 9 }}
           >
             Emoji-Moji
           </Typography>
+          <Stack direction="row"spacing={0.1} alignItems="center">
+            <Switch color="secondary"size={mobile?'medium':'large'}checked={ischecked}onChange={()=>setIschecked(prevState=>!prevState)}/>
+            <DarkModeIcon sx={{color:'white'}}/>
+          </Stack>
         </AppBar>
         <Drawer
           open={hide}
@@ -214,6 +230,6 @@ export default function App() {
           </Grid>
         )}
      </Box>
-    </>
+    </ThemeProvider>
   );
 }
