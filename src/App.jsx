@@ -1,5 +1,5 @@
 import axios from "axios";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
@@ -26,15 +26,12 @@ import {
   Switch,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 export default function App() {
   const categories = [
-    {
-      type: "smileys-emotion",
-      icon: <TagFacesIcon />,
-    },
+    {type: "smileys-emotion",icon: <TagFacesIcon />},
     { type: "people-body", icon: <EmojiPeopleIcon /> },
     { type: "animals-nature", icon: <EmojiNatureIcon /> },
     { type: "food-drink", icon: <FastfoodIcon /> },
@@ -60,32 +57,30 @@ export default function App() {
   }, [emojitype]);
   useEffect(() => {
     window.onscroll = () => {
-      
-        if (document.documentElement.scrollTop > 0) {
-          setVisible(true);
-        } else {
-          setVisible(false);
-        }
-    
+      if (document.documentElement.scrollTop > 0) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
     };
   }, []);
-  const[ischecked, setIschecked]=useState(false);
-  const maketheme=createTheme({
-    palette:{
-      mode:ischecked?'dark':'light'
+  const [ischecked, setIschecked] = useState(false);
+  const maketheme = createTheme({
+    palette: {
+      mode: ischecked ? "dark" : "light",
     },
-  })
+  });
   return (
     <ThemeProvider theme={maketheme}>
-      <CssBaseline/>
+      <CssBaseline />
       {visible && (
         <Fab
           size="small"
           color="primary"
           sx={{
-            position:"fixed",
-            right:10,
-            bottom:12,
+            position: "fixed",
+            right: 10,
+            bottom: 12,
           }}
           onClick={() => {
             document.startViewTransition(() => {
@@ -96,12 +91,12 @@ export default function App() {
           <ArrowUpwardIcon />
         </Fab>
       )}
-     <Box sx={{display:'flex'}}>
+      <Box sx={{ display: "flex" }}>
         <AppBar
           sx={{
             width: "100%",
             display: "grid",
-            gridTemplateColumns: "1fr 4fr 100px",
+            gridTemplateColumns: "repeat(3,2fr)",
             placeItems: "center",
           }}
         >
@@ -119,9 +114,14 @@ export default function App() {
           >
             Emoji-Moji
           </Typography>
-          <Stack direction="row"spacing={0.1} alignItems="center">
-            <Switch color="secondary"size={mobile?'medium':'large'}checked={ischecked}onChange={()=>setIschecked(prevState=>!prevState)}/>
-            <DarkModeIcon sx={{color:'white'}}/>
+          <Stack direction="row" spacing={0.1} alignItems="center">
+            <Switch
+              color="secondary"
+              size={mobile ? "medium" : "large"}
+              checked={ischecked}
+              onChange={() => setIschecked((prevState) => !prevState)}
+            />
+            <DarkModeIcon sx={{ color: "white" }} />
           </Stack>
         </AppBar>
         <Drawer
@@ -176,8 +176,8 @@ export default function App() {
             spacing={mobile ? 3 : 1}
             sx={{
               placeItems: "center",
-              marginLeft: mobile ? "-2rem" : 40,
-              marginBlockStart:mobile?4:8,
+              marginLeft: mobile ? "" : 40,
+              marginBlockStart: mobile ? 4 : 8,
               padding: mobile ? 2 : "",
             }}
           >
@@ -229,7 +229,7 @@ export default function App() {
             })}
           </Grid>
         )}
-     </Box>
+      </Box>
     </ThemeProvider>
   );
 }
